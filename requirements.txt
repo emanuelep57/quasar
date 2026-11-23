@@ -1,0 +1,4 @@
+# librerie che servono a Quasar per girare.
+# pbr le scrive nei metadati del pacchetto, setup_develop
+# (in plugin.sh) le installa nel venv di DevStack
+Flask>=1.0.2

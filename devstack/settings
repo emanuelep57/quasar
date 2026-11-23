@@ -11,3 +11,12 @@ QUASAR_DIR=${QUASAR_DIR:-$DEST/quasar}
 
 #Il tipo con cui Quasar comparirà nel catalogo di Keystone
 QUASAR_SERVICE_TYPE=${QUASAR_SERVICE_TYPE:-sensor}
+
+# cartella dei file di configurazione di Quasar (come /etc/placement)
+QUASAR_CONF_DIR=${QUASAR_CONF_DIR:-/etc/quasar}
+
+# app che deve caricare uWSGI
+QUASAR_UWSGI=quasar.wsgi:application
+
+# dove si trova il file di configurazione di uWSGI
+QUASAR_UWSGI_CONF=$QUASAR_CONF_DIR/quasar-uwsgi.ini

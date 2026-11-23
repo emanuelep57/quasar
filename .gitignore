@@ -1,0 +1,4 @@
+# file generati, da non mettere nel repository:
+# metadati del pacchetto (li crea pip install -e) e bytecode di Python
+*.egg-info/
+__pycache__/
