@@ -1,0 +1,16 @@
+# il pacchetto viene costruito con pbr, come i progetti OpenStack
+[build-system]
+requires = ["pbr>=7.1.0"]
+build-backend = "pbr.build"
+
+[project]
+name = "quasar"
+description = "Sensors as a Service for OpenStack"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+# versione dai tag git, dipendenze da requirements.txt
+dynamic = ["version", "dependencies"]
+
+# include la cartella quasar/ e le sue sottocartelle
+[tool.setuptools.packages.find]
+include = ["quasar*"]

@@ -3,7 +3,7 @@
 
 function install_quasar {
     # installazione del pacchetto Python
-    :
+    setup_develop $QUASAR_DIR
 }
 
 function configure_quasar {
