@@ -1,0 +1,13 @@
+# Quasar - impostazioni del plugin DevStack.
+
+#nome del plugin, deve coincidere con local.conf
+define_plugin quasar
+
+#nome del servizio in esecuzione
+enable_service quasar-api
+
+#La cartella dove si trova il codice di quasar
+QUASAR_DIR=${QUASAR_DIR:-$DEST/quasar}
+
+#Il tipo con cui Quasar comparirà nel catalogo di Keystone
+QUASAR_SERVICE_TYPE=${QUASAR_SERVICE_TYPE:-sensor}
