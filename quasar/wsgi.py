@@ -1,7 +1,11 @@
-# punto di ingresso per uWSGI
-# uWSGI importa questo modulo e cerca l'oggetto "application"
-# (il quasar.wsgi:application scritto in devstack/settings).
+"""Applicazione WSGI di Quasar, caricata da uWSGI."""
+
+from keystonemiddleware import auth_token
 
 from quasar import api
 
-application = api.create_app()
+# keystonemiddleware davanti all'app Flask: senza un token valido risponde 401.
+# La configurazione la legge dalla sezione [keystone_authtoken] di
+# /etc/quasar/quasar.conf
+application = auth_token.AuthProtocol(api.create_app(),
+                                      {"oslo_config_project": "quasar"})

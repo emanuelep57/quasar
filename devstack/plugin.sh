@@ -6,18 +6,26 @@ function install_quasar {
     setup_develop $QUASAR_DIR
 }
 
-# post-config: crea /etc/quasar (cartella di configurazione) e prepara uWSGI e Apache.
+# post-config: crea /etc/quasar, scrive quasar.conf e prepara uWSGI e Apache.
+# install -d crea /etc/quasar gia' di proprieta' di stack (mkdir + chown in un comando),
+# quasar.conf si riscrive da zero a ogni stack.sh
+# configure_keystone_authtoken_middleware scrive in quasar.conf la sezione [keystone_authtoken]:
+# con l'indirizzo di Keystone e credenziali dell'utente quasar
 # write_uwsgi_config scrive quasar-uwsgi.ini e aggiunge ad Apache la regola
-# "le richieste con /quasar vanno gestite da uWSGI". Argomenti: file .ini, applicazione,
-# percorso URL, "" = nessuna porta propria (si passa da Apache), nome
+# "le richieste con /quasar vanno gestite da uWSGI".
 function configure_quasar {
     sudo install -d -o $STACK_USER $QUASAR_CONF_DIR
+    rm -f $QUASAR_CONF
+    configure_keystone_authtoken_middleware $QUASAR_CONF quasar
     write_uwsgi_config "$QUASAR_UWSGI_CONF" "$QUASAR_UWSGI" "/quasar" "" "quasar-api"
 }
 
-# post-config: registra Quasar nel catalogo di Keystone (servizio + endpoint),
+# post-config: crea l'utente di servizio quasar, con il solo ruolo service nel progetto service
+# (basta per controllare i token e per usare Placement, senza i permessi di admin),
+# e registra Quasar nel catalogo di Keystone (servizio + endpoint).
 # l'endpoint è l'indirizzo http://192.168.XXX.XXX/quasar nella regione RegionOne (default per single-region)
 function create_quasar_accounts {
+    create_service_user "quasar"
     get_or_create_service "quasar" "$QUASAR_SERVICE_TYPE" "Quasar - Sensors as a Service"
     get_or_create_endpoint "quasar" "$REGION_NAME" "$SERVICE_PROTOCOL://$SERVICE_HOST/quasar"
 }

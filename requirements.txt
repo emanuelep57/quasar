@@ -2,3 +2,4 @@
 # pbr le scrive nei metadati del pacchetto, setup_develop
 # (in plugin.sh) le installa nel venv di DevStack
 Flask>=1.0.2
+keystonemiddleware>=13.0.1
